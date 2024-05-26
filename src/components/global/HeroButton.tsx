@@ -18,10 +18,9 @@ import { Input } from '../ui/input';
 
 
 const HeroButton: FC = () => {
-    const [userData, setUserData] = useState({
+    const [enquiries, setEnquiries] = useState({
         name: '',
         email: '',
-        code: '',
         phone: '',
         whatsapp: '',
         country: ''
@@ -29,15 +28,15 @@ const HeroButton: FC = () => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const phoneRegex = /^\d+$/;
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserData({ ...userData, [event.target.id]: event.target.value });
+        setEnquiries({ ...enquiries, [event.target.id]: event.target.value });
     };
     const supabase = createClient(
-        'https://dpekexhkedtxderitddq.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwZWtleGhrZWR0eGRlcml0ZGRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQxMjE4OTYsImV4cCI6MjAyOTY5Nzg5Nn0.o2Q0Aj_2eNCwxJIecPGPQyymQH_w5f1bcCN7zOJn4dc',
+        "https://tbzxbltcpaghivdwlyup.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRienhibHRjcGFnaGl2ZHdseXVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY3MTIyMDMsImV4cCI6MjAzMjI4ODIwM30.FrGZO0VrOUugGSIRzprbINCESSPts7AchDlpOLfMZEw",
     );
     const handleSubmit = async () => {
-      const isValidEmail = emailRegex.test(userData.email);
-      const isValidPhone = phoneRegex.test(userData.phone);
+      const isValidEmail = emailRegex.test(enquiries.email);
+      const isValidPhone = phoneRegex.test(enquiries.phone);
       if (!isValidEmail) {
         showToast("Not a valid email", false)
          return;
@@ -48,16 +47,15 @@ const HeroButton: FC = () => {
          return;
        }
         try {
-            const { error } = await supabase.from('userdata').insert(userData);
+            const { error } = await supabase.from('enquiries').insert(enquiries);
 
             if (error) {
                 showToast("Try again later", false)
             } else {
-                showToast("You are sigend up", true)
-                setUserData({
+                showToast("You are signed up", true)
+                setEnquiries({
                     name: '',
                     email: '',
-                    code: '',
                     phone: '',
                     whatsapp: '',
                     country: ''
@@ -77,8 +75,8 @@ const HeroButton: FC = () => {
             <DialogContent className="phone:w-[95%] rounded-md lg:w-[40vw]">
                 <DialogHeader>
                     <DialogTitle className='text-2xl tracking-tighter'>Join us</DialogTitle>
-                    <DialogDescription>
-                        Sign up for insight-worthy newsletter and updates.
+                    <DialogDescription className='phone:text-sm tablet:text-base tracking-tight font-medium'>
+                        Sign up for a free trial.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -88,7 +86,7 @@ const HeroButton: FC = () => {
                             id="name"
                             placeholder="Your name"
                             className="col-span-3"
-                            value={userData.name}
+                            value={enquiries.name}
                             onChange={handleChange}
                         />
                     </div>
@@ -98,7 +96,7 @@ const HeroButton: FC = () => {
                             id="email"
                             placeholder="name@email.com"
                             className="col-span-3"
-                            value={userData.email}
+                            value={enquiries.email}
                             onChange={handleChange}
                         />
                     </div>
@@ -108,7 +106,7 @@ const HeroButton: FC = () => {
                             id="country"
                             placeholder=""
                             className="col-span-3"
-                            value={userData.country}
+                            value={enquiries.country}
                             onChange={handleChange}
                         />
                     </div>
@@ -118,7 +116,7 @@ const HeroButton: FC = () => {
                             id="whatsapp"
                             placeholder=""
                             className="col-span-3"
-                            value={userData.whatsapp}
+                            value={enquiries.whatsapp}
                             onChange={handleChange}
                         />
                     </div>
@@ -128,7 +126,7 @@ const HeroButton: FC = () => {
                             id="phone"
                             placeholder=""
                             className="col-span-3"
-                            value={userData.phone}
+                            value={enquiries.phone}
                             onChange={handleChange}
                         />
                     </div>
