@@ -14,16 +14,16 @@ import { UserData } from '@/types/userDataProps';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const Inquiries: FC = () => {
-    const [userData, setUserData] = useState<UserData[] | null>(null);
+    const [enquiries, setEnquiries] = useState<UserData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const supabase = createClient(
-        'https://dpekexhkedtxderitddq.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwZWtleGhrZWR0eGRlcml0ZGRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQxMjE4OTYsImV4cCI6MjAyOTY5Nzg5Nn0.o2Q0Aj_2eNCwxJIecPGPQyymQH_w5f1bcCN7zOJn4dc',
+        "https://tbzxbltcpaghivdwlyup.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRienhibHRjcGFnaGl2ZHdseXVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY3MTIyMDMsImV4cCI6MjAzMjI4ODIwM30.FrGZO0VrOUugGSIRzprbINCESSPts7AchDlpOLfMZEw",
     );
     useEffect(() => {
         const handleGetUsers = async () => {
-            const { data } = await supabase.from('userdata').select('*');
-            setUserData(data);
+            const { data } = await supabase.from('enquiries').select('*');
+            setEnquiries(data);
             setLoading(false);
         };
         handleGetUsers();
@@ -71,26 +71,25 @@ const Inquiries: FC = () => {
                             </>
                         ) : (
                             <>
-                                {userData &&
-                                    userData.map(user => (
-                                        <TableRow key={user.id}>
+                                {enquiries && enquiries.map(enquiry => (
+                                        <TableRow key={enquiry.id}>
                                             <TableCell className="font-medium">
-                                                {user.name}
+                                                {enquiry.name}
                                             </TableCell>
                                             <TableCell>
-                                                <a href={`mailto:${user.email}`} className="hover:text-indigo-500 animation">
-                                                   {user.email}
+                                                <a href={`mailto:${enquiry.email}`} className="hover:text-indigo-500 animation">
+                                                   {enquiry.email}
                                                 </a>
                                             </TableCell>
-                                            <TableCell>{user.country}</TableCell>
+                                            <TableCell>{enquiry.country}</TableCell>
                                             <TableCell>
-                                                <a href={`tel:${user.phone}`} className="hover:text-indigo-500 animation">
-                                                   {user.phone}
+                                                <a href={`tel:${enquiry.phone}`} className="hover:text-indigo-500 animation">
+                                                   {enquiry.phone}
                                                 </a>
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <a href={`https://wa.me/${user.whatsapp}`} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 animation">
-                                                   {user.whatsapp}
+                                                <a href={`https://wa.me/${enquiry.whatsapp}`} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 animation">
+                                                   {enquiry.whatsapp}
                                                 </a>
                                             </TableCell>
                                         </TableRow>
