@@ -46,7 +46,7 @@ const Footer: FC = () => {
                                 </div>
                             </div>
                             <div className="flex phone:justify-center lg:justify-between phone:gap-7 lg:gap-10 phone:mt-5 tablet:mt-0">
-                                <div>
+                                {/* <div>
                                     <h3 className="text-lg font-semibold text-neutral-500 phone:mb-1 lg:mb-1 text-center">
                                         Company
                                     </h3>
@@ -55,7 +55,7 @@ const Footer: FC = () => {
                                             <Link to='/contact-us' className='underline'>Contact</Link>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="text-lg font-semibold text-neutral-500 phone:mb-1 lg:mb-1 text-center">
                                         Resources

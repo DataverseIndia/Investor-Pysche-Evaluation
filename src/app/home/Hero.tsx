@@ -1,28 +1,26 @@
 import { FC } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import { Button } from '@nextui-org/button';
 import HeroButton from '@/components/global/HeroButton';
+import { Button } from '@nextui-org/button';
+import { useNavigate } from 'react-router-dom';
 
 const Hero: FC = () => {
     const isAboveSmallScreens = useMediaQuery('(min-width: 768px)');
-    const handleDownload = () => {
-        const pdfUrl = '/sample.pdf';
-        fetch(pdfUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'sample.pdf');
-                document.body.appendChild(link);
-                link.click();
-            })
-            .catch(error => {
-                console.error('Failed to download PDF:', error);
-            });
-    };
+    const navigate = useNavigate()
+    const handleStep4 = () => {
+        navigate('/step-four')
+    }
+    const handleStep3 = () => {
+        navigate('/step-three')
+    }
+    const handleStep2 = () => {
+        navigate('/step-two')
+    }
+    const handleStep1 = () => {
+        navigate('/step-one')
+    }
     return (
-        <section className="h-[80vh]">
+        <section className="h-[105vh]">
             <div className="h-full overflow-hidden absolute flex-none w-full z-0">
                 <img className="block w-full h-full" src="/assets/background.webp" alt="" />
             </div>
@@ -43,20 +41,34 @@ const Hero: FC = () => {
                     Seeking and building strategic alliances and collaborative arrangements through
                     partnerships to advance the objectives of the organization.
                 </h1>
-                <div className="phone:w-[90%] lg:w-[25%] flex relative phone:mt-2 lg:mt-0">
+                <div className="phone:w-[90%] lg:w-[30%] flex relative phone:mt-2 lg:mt-0">
                     {isAboveSmallScreens ? (
                         <input
-                            className="rounded-full border w-full px-5 phone:py-3.5 lg:py-4 bg-transparent placeholder:text-neutral-500 text-neutral-800 placeholder:font-medium font-medium text-lg border-neutral-300 focus:outline-neutral-300 phone:placeholder:text-sm lg:placeholder:text-lg"
+                            className="rounded-full border-2 w-full px-5 tablet:py-3.5 lg:py-4 bg-transparent placeholder:text-neutral-500 text-neutral-800 placeholder:font-medium font-medium text-lg border-neutral-300 focus:outline-neutral-300 phone:placeholder:text-sm tablet:placeholder:text-base lg:placeholder:text-lg"
                             placeholder="something@email.com"
                         />
                     ) : (
                         <></>
                     )}
-                    <div className="phone:flex gap-3 my-auto phone:mx-auto lg:-ml-[110px]">
-                        <HeroButton />
-                        {isAboveSmallScreens ? <></> : <Button className='bg-neutral-900 text-white rounded-full phone:px-[1.5rem] py-6' onClick={handleDownload}>Download Sample</Button>}
+                    <div className="phone:flex gap-3 my-auto phone:mx-auto lg:-ml-[185px]">
+                        <HeroButton buttonClassName='rounded-3xl bg-neutral-800/90 hover:bg-neutral-900/90 text-neutral-100' buttonText='Download sample'/>
                     </div>
                 </div>
+                <div className='grid gap-3'>
+                    <Button onClick={handleStep1} radius='sm' className='rounded-3xl phone:px-[3rem] lg:px-10 py-6 bg-neutral-700 text-neutral-100'>
+                        Step One
+                    </Button>
+                    <Button onClick={handleStep2} radius='sm' className='rounded-3xl phone:px-[3rem] lg:px-10 py-6 bg-neutral-700 text-neutral-100'>
+                        Step Two
+                    </Button>
+                    <Button onClick={handleStep3} radius='sm' className='rounded-3xl phone:px-[3rem] lg:px-10 py-6 bg-neutral-700 text-neutral-100'>
+                        Step Three
+                    </Button>
+                    <Button onClick={handleStep4} radius='sm' className='rounded-3xl phone:px-[3rem] lg:px-10 py-6 bg-neutral-700 text-neutral-100'>
+                        Step Four
+                    </Button>
+                </div>
+
             </div>
         </section>
     );

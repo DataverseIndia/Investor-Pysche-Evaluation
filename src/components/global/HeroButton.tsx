@@ -1,23 +1,27 @@
-'use client';
-
 import { FC, useState } from 'react';
 import { Button } from '@nextui-org/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { createClient } from '@supabase/supabase-js';
 import { showToast } from '@/helpers/toasts';
 import { Input } from '../ui/input';
 
-
-const HeroButton: FC = () => {
+const HeroButton: FC<{ buttonClassName?: string, buttonText?: string }> = ({ buttonClassName, buttonText = 'Join' }) =>{
+    const handleDownload = () => {
+        const pdfUrl = '/sample.pdf';
+        fetch(pdfUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'sample.pdf');
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch(error => {
+                console.error('Failed to download PDF:', error);
+            });
+    };
     const [enquiries, setEnquiries] = useState({
         name: '',
         email: '',
@@ -52,7 +56,8 @@ const HeroButton: FC = () => {
             if (error) {
                 showToast("Try again later", false)
             } else {
-                showToast("You are signed up", true)
+                showToast("You are signed up", true);
+                handleDownload();
                 setEnquiries({
                     name: '',
                     email: '',
@@ -68,16 +73,13 @@ const HeroButton: FC = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="bg-yellow-200/70 animation hover:bg-yellow-300/70 rounded-full -ml-1 phone:px-[3.5rem] lg:px-10 py-6 outline-none text-sm tracking-tighter font-semibold text-[#0b0e0f] overflow-hidden">
-                    Join
+                <Button className={`bg-yellow-200/70 animation hover:bg-yellow-300/70 rounded-full -ml-1 phone:px-[3.5rem] lg:px-10 py-6 outline-none text-sm tracking-tighter text-[#0b0e0f] overflow-hidden ${buttonClassName}`}>
+                    {buttonText}
                 </Button>
             </DialogTrigger>
             <DialogContent className="phone:w-[95%] rounded-md lg:w-[40vw]">
                 <DialogHeader>
-                    <DialogTitle className='text-2xl tracking-tighter'>Join us</DialogTitle>
-                    <DialogDescription className='phone:text-sm tablet:text-base tracking-tight font-medium'>
-                        Sign up for a free trial.
-                    </DialogDescription>
+                    <DialogTitle className='text-xl tracking-tighter text-center'>Signup for a free sample </DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4 w-full">
@@ -138,7 +140,7 @@ const HeroButton: FC = () => {
                         onClick={handleSubmit}
                         className="bg-neutral-900 rounded-md text-neutral-100"
                     >
-                        Save changes
+                        Download Sample
                     </Button>
                   </DialogClose>
                 </DialogFooter>
